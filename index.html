@@ -6,11 +6,14 @@
   <meta content="Web 3.0 Navigation, Knowledge, Tools。" name="description">
   <meta content="Web3, Web3.0, ETH, NFT, Wallet" name="keywords">
   <meta name="theme-color" content="#5f18d3">
-  {{ $Domain := .Split .Host "3" }}
+  {{ $Domains := .Split .Host "3" }}
+  {{ $Domain := index $Domains 0 }}
+  {{ $DomainExt := index $Domains 1 }}
+  {{ $DomainLen := len .Host }}
   <link rel="icon" type="image/png" href="./assets/images/web3.icon.png">
   <link rel="icon" type="image/png" sizes="144x144" href="./assets/images/web3.icon.png">
   <link rel="apple-touch-icon" type="image/png" href="./assets/images/web3.icon.png">
-  <title>{{index $Domain 0}}&#179;{{index $Domain 1}}</title>
+  <title>{{ .ToUpper $Domain }}&#179;{{ .ToUpper $DomainExt }}</title>
   <style>
     @font-face {
       font-family: 'MiSans';
@@ -28,6 +31,7 @@
     }
     html {
       font-size: 13.3333vw;
+      --domain-len: {{$DomainLen}};
     }
     html,body {
       height: 100%;
@@ -48,7 +52,7 @@
     h1 {
       margin: 0;
       font-family: "FatFrank";
-      font-size: 2rem;
+      font-size: calc( 120vw / var(--domain-len) );
       color: #151b2a;
     }
     h1:first-letter {
@@ -86,19 +90,11 @@
         font-size: 100px;
       }
     }
-    @media screen and (orientation: portrait) {
-      h1 {
-        font-size: 1.5rem;
-      }
-      h1 span {
-        font-size: .96rem;
-      }
-    }
 
   </style>
 </head>
 <body>
-  <h1>{{index $Domain 0}}<sup>3</sup><span>{{index $Domain 1}}</span></h1>
+  <h1>{{$Domain}}<sup>3</sup><span>{{$DomainExt}}</span></h1>
   <p>A WEB<sup>3.0</sup> Project. <br> Coming soon...</p>
   <p><a href="https://the.boring.studio"><span>&copy;</span>{{.Now "2006"}} the.boring.studio</a></p>
   <canvas id="gradient-canvas" data-transition-in />
